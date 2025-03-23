@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { supabase } from "../supabaseClient"; 
+import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
 const AuthPage = ({ isRegister }) => {
@@ -20,32 +20,37 @@ const AuthPage = ({ isRegister }) => {
     }
 
     try {
-      if (isRegister) {
-        const { data, error } = await supabase
-          .from("users")
-          .insert([{ email, password, role, created_at: new Date() }]);
+        if (isRegister) {
+          const { data, error } = await supabase
+            .from("users")
+            .insert([{ email, password, role, created_at: new Date() }]);
+  
+          if (error) throw error;
 
-        if (error) throw error;
-      } else {
-        const { data, error } = await supabase
-          .from("users")
-          .select("role")
-          .eq("email", email)
-          .single();
-
-        if (error || !data) throw new Error("Invalid credentials");
-
-        const userRole = data.role;
-        navigate(userRole === "digital creator" ? "/dashboard/creator" : "/dashboard/client");
+          navigate("/login");
+        } else {
+          const { data, error } = await supabase
+            .from("users")
+            .select("*")
+            .eq("email", email)
+            .single();
+  
+          if (error || !data) throw new Error("Invalid credentials");
+  
+          const userRole = data.role;
+  
+          localStorage.setItem('user', JSON.stringify(data));
+  
+          navigate(userRole === "digital creator" ? "/dashboard/creator" : "/dashboard/client");
+        }
+      } catch (err) {
+        setError(err.message);
       }
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+    };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-primary text-white">
-      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96">
+    <div className="flex items-center justify-center min-h-screen text-white dark:bg-gray-900">
+      <div className="bg-gray-900 dark:bg-gray-800 p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold mb-6 text-center">
           {isRegister ? "Create Account" : "Login"}
         </h2>
@@ -56,7 +61,7 @@ const AuthPage = ({ isRegister }) => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 rounded bg-gray-800 text-white"
+            className="w-full p-3 rounded bg-gray-800 text-white dark:bg-gray-700"
             required
           />
           <input
@@ -64,7 +69,7 @@ const AuthPage = ({ isRegister }) => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 rounded bg-gray-800 text-white"
+            className="w-full p-3 rounded bg-gray-800 text-white dark:bg-gray-700"
             required
           />
           {isRegister && (
@@ -74,13 +79,13 @@ const AuthPage = ({ isRegister }) => {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full p-3 rounded bg-gray-800 text-white"
+                className="w-full p-3 rounded bg-gray-800 text-white dark:bg-gray-700"
                 required
               />
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="w-full p-3 rounded bg-gray-800 text-white"
+                className="w-full p-3 rounded bg-gray-800 text-white dark:bg-gray-700"
               >
                 <option value="digital creator">Digital Creator</option>
                 <option value="client">Client</option>
@@ -89,7 +94,7 @@ const AuthPage = ({ isRegister }) => {
           )}
           <button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded font-bold transition"
+            className="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded font-bold transition dark:bg-blue-600 dark:hover:bg-blue-700"
           >
             {isRegister ? "Sign Up" : "Login"}
           </button>
