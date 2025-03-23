@@ -16,7 +16,7 @@ export const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/creators"
+              to="/register"
               className="px-8 py-4 bg-primary-500 text-white rounded-md hover:bg-primary-600 flex items-center justify-center gap-2"
             >
               Find Creators <ArrowRight className="w-5 h-5" />
@@ -37,7 +37,7 @@ export const Home = () => {
           <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-16">
             Connect with Amazing Talent
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <div className="p-6 text-center">
               <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Palette className="w-8 h-8 text-primary-500" />
@@ -47,15 +47,7 @@ export const Home = () => {
                 Find talented designers for your brand, website, or product designs.
               </p>
             </div>
-            <div className="p-6 text-center">
-              <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Code className="w-8 h-8 text-primary-500" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Developers</h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Connect with skilled developers to bring your ideas to life.
-              </p>
-            </div>
+           
             <div className="p-6 text-center">
               <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Camera className="w-8 h-8 text-primary-500" />
